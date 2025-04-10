@@ -2,17 +2,17 @@
 
 Public Class Benchmark
     Dim StartTime As DateTime
-    Dim Version = "1.3"
+    Dim Version = "2.0"
 
     Public Sub CPU()
-        Dim n As Long
+        Dim n As Byte
         Dim time As Double
         CPULbl.Text = "Berechne . . ."
         CPULbl.BackColor = CPUBtn.BackColor
         CPULbl.Update()
         StartTime = Now
-        For i As Long = 0 To 2000000000
-            n = i + i * 2
+        For i As Long = 0 To If(Environment.Is64BitProcess, 1500000000, 500000000)
+            n = i Mod 7
         Next
         time = Now.Subtract(StartTime).TotalSeconds
         CPULbl.Text = time.ToString.Substring(0, 4)
@@ -33,7 +33,7 @@ Public Class Benchmark
         RAMLbl.BackColor = RAMBtn.BackColor
         RAMLbl.Update()
         StartTime = Now
-        For i As Long = 0 To 15000000
+        For i As Long = 0 To If(Environment.Is64BitProcess, 23000000, 20000000)
             list.Add(1)
         Next
         time = Now.Subtract(StartTime).TotalSeconds
@@ -56,23 +56,22 @@ Public Class Benchmark
         StartTime = Now
 
         Dim writer As StreamWriter
-        writer = New IO.StreamWriter("tempfile.ckbm", False)
-        For i As Long = 0 To 18000000
+        writer = New StreamWriter("tempfile.ckbm", False)
+        For i As Long = 0 To If(Environment.Is64BitProcess, 30000000, 25000000)
             writer.Write("1")
         Next
         writer.Close()
         writer.Dispose()
 
         Dim reader As StreamReader
-        reader = New IO.StreamReader("tempfile.ckbm")
-        For i As Long = 0 To 500000
+        reader = New StreamReader("tempfile.ckbm")
+        For i As Long = 0 To If(Environment.Is64BitProcess, 550000, 500000)
             reader.ReadToEnd()
         Next
         reader.Close()
         reader.Dispose()
-
-        File.Delete("tempfile.ckbm")
         time = Now.Subtract(StartTime).TotalSeconds
+        File.Delete("tempfile.ckbm")
         DiskLbl.Text = time.ToString.Substring(0, 4)
         If time < 3 Then
             DiskLbl.BackColor = Color.Green
@@ -82,6 +81,16 @@ Public Class Benchmark
             DiskLbl.BackColor = Color.Red
         End If
         DiskLbl.Update()
+
+        Dim failedAttempts As Byte = 10
+        While File.Exists("tempfile.ckbm")
+            If failedAttempts = 0 Then
+                MsgBox("tempfile.ckbm konnte nicht wieder gelöscht werden.", vbExclamation, "Fehler beim Löschen")
+                Exit While
+            End If
+            File.Delete("tempfile.ckbm")
+            failedAttempts -= 1
+        End While
     End Sub
 
     Public Sub Enable(enabled As Boolean)
@@ -124,8 +133,8 @@ Public Class Benchmark
     End Sub
 
     Private Sub Benchmark_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Me.Text &= $" ({Version})"
-        Me.Show()
+        Text &= $" ({Version}_{If(Environment.Is64BitProcess, "x64", "x86")})"
+        Show()
         TestAllBtn.Focus()
     End Sub
 
