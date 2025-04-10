@@ -91,6 +91,7 @@ Public Class Benchmark
                     Exit While
                 End If
                 File.Delete(fileName)
+                Threading.Thread.Sleep(1000)
                 failedAttempts -= 1
             End While
         Catch
