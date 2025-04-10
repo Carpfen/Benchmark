@@ -2,7 +2,7 @@
 
 Public Class Benchmark
     Dim StartTime As DateTime
-    Dim Version = "2.0"
+    Dim Version As String = $"2.1_"
 
     Public Sub CPU()
         Dim n As Byte
@@ -48,49 +48,54 @@ Public Class Benchmark
         RAMLbl.Update()
     End Sub
 
-    Public Sub Disk()
+    Public Sub Disk(Optional fileNumber As Integer = 0)
         Dim time As Double
+        Dim fileName As String = $"tempfile {fileNumber}.ckbm"
         DiskLbl.Text = "Berechne . . ."
         DiskLbl.BackColor = CPUBtn.BackColor
         DiskLbl.Update()
-        StartTime = Now
+        Try
+            StartTime = Now
 
-        Dim writer As StreamWriter
-        writer = New StreamWriter("tempfile.ckbm", False)
-        For i As Long = 0 To If(Environment.Is64BitProcess, 30000000, 25000000)
-            writer.Write("1")
-        Next
-        writer.Close()
-        writer.Dispose()
+            Dim writer As StreamWriter
+            writer = New StreamWriter(fileName, False)
+            For i As Long = 0 To If(Environment.Is64BitProcess, 30000000, 25000000)
+                writer.Write("1")
+            Next
+            writer.Close()
+            writer.Dispose()
 
-        Dim reader As StreamReader
-        reader = New StreamReader("tempfile.ckbm")
-        For i As Long = 0 To If(Environment.Is64BitProcess, 550000, 500000)
-            reader.ReadToEnd()
-        Next
-        reader.Close()
-        reader.Dispose()
-        time = Now.Subtract(StartTime).TotalSeconds
-        File.Delete("tempfile.ckbm")
-        DiskLbl.Text = time.ToString.Substring(0, 4)
-        If time < 3 Then
-            DiskLbl.BackColor = Color.Green
-        ElseIf time < 6 Then
-            DiskLbl.BackColor = Color.Yellow
-        Else
-            DiskLbl.BackColor = Color.Red
-        End If
-        DiskLbl.Update()
-
-        Dim failedAttempts As Byte = 10
-        While File.Exists("tempfile.ckbm")
-            If failedAttempts = 0 Then
-                MsgBox("tempfile.ckbm konnte nicht wieder gelöscht werden.", vbExclamation, "Fehler beim Löschen")
-                Exit While
+            Dim reader As StreamReader
+            reader = New StreamReader(fileName)
+            For i As Long = 0 To If(Environment.Is64BitProcess, 550000, 500000)
+                reader.ReadToEnd()
+            Next
+            reader.Close()
+            reader.Dispose()
+            time = Now.Subtract(StartTime).TotalSeconds
+            File.Delete(fileName)
+            DiskLbl.Text = time.ToString.Substring(0, 4)
+            If time < 3 Then
+                DiskLbl.BackColor = Color.Green
+            ElseIf time < 6 Then
+                DiskLbl.BackColor = Color.Yellow
+            Else
+                DiskLbl.BackColor = Color.Red
             End If
-            File.Delete("tempfile.ckbm")
-            failedAttempts -= 1
-        End While
+            DiskLbl.Update()
+
+            Dim failedAttempts As Byte = 10
+            While File.Exists(fileName)
+                If failedAttempts = 0 Then
+                    MsgBox(fileName & " konnte nicht wieder gelöscht werden.", vbExclamation, "Fehler beim Löschen")
+                    Exit While
+                End If
+                File.Delete(fileName)
+                failedAttempts -= 1
+            End While
+        Catch
+            Disk(fileNumber + 1)
+        End Try
     End Sub
 
     Public Sub Enable(enabled As Boolean)
@@ -133,7 +138,8 @@ Public Class Benchmark
     End Sub
 
     Private Sub Benchmark_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Text &= $" ({Version}_{If(Environment.Is64BitProcess, "x64", "x86")})"
+        Version &= If(Environment.Is64BitProcess, "x64", "x86")
+        Text &= $" ({Version})"
         Show()
         TestAllBtn.Focus()
     End Sub
