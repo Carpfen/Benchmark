@@ -22,144 +22,136 @@ Partial Class Benchmark
     'Das Bearbeiten mit dem Code-Editor ist nicht möglich.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        CPUBtn = New Button()
-        RAMBtn = New Button()
-        DiskBtn = New Button()
-        TestAllBtn = New Button()
-        CPULbl = New Label()
-        RAMLbl = New Label()
-        DiskLbl = New Label()
-        InfoBtn = New Button()
-        CopyBtn = New Button()
-        SuspendLayout()
-        ' 
-        ' CPUBtn
-        ' 
-        CPUBtn.BackColor = SystemColors.Control
-        CPUBtn.Cursor = Cursors.Hand
-        CPUBtn.Font = New Font("Microsoft Sans Serif", 24.75F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        CPUBtn.Location = New Point(58, 29)
-        CPUBtn.Margin = New Padding(4, 3, 4, 3)
-        CPUBtn.Name = "CPUBtn"
-        CPUBtn.RightToLeft = RightToLeft.No
-        CPUBtn.Size = New Size(292, 87)
-        CPUBtn.TabIndex = 0
-        CPUBtn.Text = "Teste CPU:"
-        CPUBtn.UseVisualStyleBackColor = False
-        ' 
-        ' RAMBtn
-        ' 
-        RAMBtn.Cursor = Cursors.Hand
-        RAMBtn.Font = New Font("Microsoft Sans Serif", 24.75F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        RAMBtn.Location = New Point(58, 144)
-        RAMBtn.Margin = New Padding(4, 3, 4, 3)
-        RAMBtn.Name = "RAMBtn"
-        RAMBtn.Size = New Size(292, 87)
-        RAMBtn.TabIndex = 1
-        RAMBtn.Text = "Teste RAM:"
-        RAMBtn.UseVisualStyleBackColor = False
-        ' 
-        ' DiskBtn
-        ' 
-        DiskBtn.Cursor = Cursors.Hand
-        DiskBtn.Font = New Font("Microsoft Sans Serif", 24.75F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        DiskBtn.Location = New Point(58, 260)
-        DiskBtn.Margin = New Padding(4, 3, 4, 3)
-        DiskBtn.Name = "DiskBtn"
-        DiskBtn.Size = New Size(292, 87)
-        DiskBtn.TabIndex = 2
-        DiskBtn.Text = "Teste Disk:"
-        DiskBtn.UseVisualStyleBackColor = False
-        ' 
-        ' TestAllBtn
-        ' 
-        TestAllBtn.Cursor = Cursors.Hand
-        TestAllBtn.Font = New Font("Microsoft Sans Serif", 24.75F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        TestAllBtn.Location = New Point(58, 375)
-        TestAllBtn.Margin = New Padding(4, 3, 4, 3)
-        TestAllBtn.Name = "TestAllBtn"
-        TestAllBtn.Size = New Size(292, 87)
-        TestAllBtn.TabIndex = 3
-        TestAllBtn.Text = "Teste Alles"
-        TestAllBtn.UseVisualStyleBackColor = False
-        ' 
-        ' CPULbl
-        ' 
-        CPULbl.Font = New Font("Microsoft Sans Serif", 24.75F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        CPULbl.Location = New Point(496, 29)
-        CPULbl.Margin = New Padding(4, 0, 4, 0)
-        CPULbl.Name = "CPULbl"
-        CPULbl.Size = New Size(292, 87)
-        CPULbl.TabIndex = 4
-        CPULbl.Text = "CPU-Werte"
-        CPULbl.TextAlign = ContentAlignment.MiddleCenter
-        ' 
-        ' RAMLbl
-        ' 
-        RAMLbl.Font = New Font("Microsoft Sans Serif", 24.75F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        RAMLbl.Location = New Point(496, 144)
-        RAMLbl.Margin = New Padding(4, 0, 4, 0)
-        RAMLbl.Name = "RAMLbl"
-        RAMLbl.Size = New Size(292, 87)
-        RAMLbl.TabIndex = 5
-        RAMLbl.Text = "RAM-Werte"
-        RAMLbl.TextAlign = ContentAlignment.MiddleCenter
-        ' 
-        ' DiskLbl
-        ' 
-        DiskLbl.Font = New Font("Microsoft Sans Serif", 24.75F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        DiskLbl.Location = New Point(496, 260)
-        DiskLbl.Margin = New Padding(4, 0, 4, 0)
-        DiskLbl.Name = "DiskLbl"
-        DiskLbl.Size = New Size(292, 87)
-        DiskLbl.TabIndex = 6
-        DiskLbl.Text = "Disk-Werte"
-        DiskLbl.TextAlign = ContentAlignment.MiddleCenter
-        ' 
-        ' InfoBtn
-        ' 
-        InfoBtn.Cursor = Cursors.Hand
-        InfoBtn.Font = New Font("Microsoft Sans Serif", 24.75F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        InfoBtn.Location = New Point(58, 490)
-        InfoBtn.Margin = New Padding(4, 3, 4, 3)
-        InfoBtn.Name = "InfoBtn"
-        InfoBtn.Size = New Size(292, 87)
-        InfoBtn.TabIndex = 7
-        InfoBtn.Text = "Informationen"
-        InfoBtn.UseVisualStyleBackColor = False
-        ' 
-        ' CopyBtn
-        ' 
-        CopyBtn.Cursor = Cursors.Hand
-        CopyBtn.Font = New Font("Microsoft Sans Serif", 24.75F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        CopyBtn.Location = New Point(496, 375)
-        CopyBtn.Margin = New Padding(4, 3, 4, 3)
-        CopyBtn.Name = "CopyBtn"
-        CopyBtn.Size = New Size(292, 87)
-        CopyBtn.TabIndex = 8
-        CopyBtn.Text = "Kopiere Werte"
-        CopyBtn.UseVisualStyleBackColor = False
-        ' 
-        ' Benchmark
-        ' 
-        AutoScaleDimensions = New SizeF(7F, 15F)
-        AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(856, 599)
-        Controls.Add(CopyBtn)
-        Controls.Add(InfoBtn)
-        Controls.Add(DiskLbl)
-        Controls.Add(RAMLbl)
-        Controls.Add(CPULbl)
-        Controls.Add(TestAllBtn)
-        Controls.Add(DiskBtn)
-        Controls.Add(RAMBtn)
-        Controls.Add(CPUBtn)
-        FormBorderStyle = FormBorderStyle.FixedSingle
-        Margin = New Padding(4, 3, 4, 3)
-        MaximizeBox = False
-        Name = "Benchmark"
-        Text = "Benchmark"
-        ResumeLayout(False)
+        Me.CPUBtn = New System.Windows.Forms.Button()
+        Me.RAMBtn = New System.Windows.Forms.Button()
+        Me.DiskBtn = New System.Windows.Forms.Button()
+        Me.TestAllBtn = New System.Windows.Forms.Button()
+        Me.CPULbl = New System.Windows.Forms.Label()
+        Me.RAMLbl = New System.Windows.Forms.Label()
+        Me.DiskLbl = New System.Windows.Forms.Label()
+        Me.InfoBtn = New System.Windows.Forms.Button()
+        Me.CopyBtn = New System.Windows.Forms.Button()
+        Me.HardwareBtn = New System.Windows.Forms.Button()
+        Me.SuspendLayout()
+        '
+        'CPUBtn
+        '
+        Me.CPUBtn.BackColor = System.Drawing.SystemColors.Control
+        Me.CPUBtn.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.CPUBtn.Location = New System.Drawing.Point(50, 25)
+        Me.CPUBtn.Name = "CPUBtn"
+        Me.CPUBtn.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.CPUBtn.Size = New System.Drawing.Size(250, 75)
+        Me.CPUBtn.TabIndex = 0
+        Me.CPUBtn.Text = "Teste CPU:"
+        Me.CPUBtn.UseVisualStyleBackColor = False
+        '
+        'RAMBtn
+        '
+        Me.RAMBtn.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.RAMBtn.Location = New System.Drawing.Point(50, 125)
+        Me.RAMBtn.Name = "RAMBtn"
+        Me.RAMBtn.Size = New System.Drawing.Size(250, 75)
+        Me.RAMBtn.TabIndex = 1
+        Me.RAMBtn.Text = "Teste RAM:"
+        Me.RAMBtn.UseVisualStyleBackColor = False
+        '
+        'DiskBtn
+        '
+        Me.DiskBtn.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.DiskBtn.Location = New System.Drawing.Point(50, 225)
+        Me.DiskBtn.Name = "DiskBtn"
+        Me.DiskBtn.Size = New System.Drawing.Size(250, 75)
+        Me.DiskBtn.TabIndex = 2
+        Me.DiskBtn.Text = "Teste Disk:"
+        Me.DiskBtn.UseVisualStyleBackColor = False
+        '
+        'TestAllBtn
+        '
+        Me.TestAllBtn.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.TestAllBtn.Location = New System.Drawing.Point(50, 325)
+        Me.TestAllBtn.Name = "TestAllBtn"
+        Me.TestAllBtn.Size = New System.Drawing.Size(250, 75)
+        Me.TestAllBtn.TabIndex = 3
+        Me.TestAllBtn.Text = "Teste Alles"
+        Me.TestAllBtn.UseVisualStyleBackColor = False
+        '
+        'CPULbl
+        '
+        Me.CPULbl.Location = New System.Drawing.Point(425, 25)
+        Me.CPULbl.Name = "CPULbl"
+        Me.CPULbl.Size = New System.Drawing.Size(250, 75)
+        Me.CPULbl.TabIndex = 4
+        Me.CPULbl.Text = "CPU-Werte"
+        Me.CPULbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'RAMLbl
+        '
+        Me.RAMLbl.Location = New System.Drawing.Point(425, 125)
+        Me.RAMLbl.Name = "RAMLbl"
+        Me.RAMLbl.Size = New System.Drawing.Size(250, 75)
+        Me.RAMLbl.TabIndex = 5
+        Me.RAMLbl.Text = "RAM-Werte"
+        Me.RAMLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'DiskLbl
+        '
+        Me.DiskLbl.Location = New System.Drawing.Point(425, 225)
+        Me.DiskLbl.Name = "DiskLbl"
+        Me.DiskLbl.Size = New System.Drawing.Size(250, 75)
+        Me.DiskLbl.TabIndex = 6
+        Me.DiskLbl.Text = "Disk-Werte"
+        Me.DiskLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'InfoBtn
+        '
+        Me.InfoBtn.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.InfoBtn.Location = New System.Drawing.Point(50, 465)
+        Me.InfoBtn.Name = "InfoBtn"
+        Me.InfoBtn.Size = New System.Drawing.Size(250, 75)
+        Me.InfoBtn.TabIndex = 8
+        Me.InfoBtn.Text = "Informationen"
+        Me.InfoBtn.UseVisualStyleBackColor = False
+        '
+        'CopyBtn
+        '
+        Me.CopyBtn.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.CopyBtn.Location = New System.Drawing.Point(425, 325)
+        Me.CopyBtn.Name = "CopyBtn"
+        Me.CopyBtn.Size = New System.Drawing.Size(250, 75)
+        Me.CopyBtn.TabIndex = 7
+        Me.CopyBtn.Text = "Kopiere Werte"
+        Me.CopyBtn.UseVisualStyleBackColor = False
+        '
+        'HardwareBtn
+        '
+        Me.HardwareBtn.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.HardwareBtn.Location = New System.Drawing.Point(425, 465)
+        Me.HardwareBtn.Name = "HardwareBtn"
+        Me.HardwareBtn.Size = New System.Drawing.Size(250, 75)
+        Me.HardwareBtn.TabIndex = 9
+        Me.HardwareBtn.Text = "Hardware"
+        Me.HardwareBtn.UseVisualStyleBackColor = False
+        '
+        'Benchmark
+        '
+        Me.ClientSize = New System.Drawing.Size(734, 561)
+        Me.Controls.Add(Me.HardwareBtn)
+        Me.Controls.Add(Me.CopyBtn)
+        Me.Controls.Add(Me.InfoBtn)
+        Me.Controls.Add(Me.DiskLbl)
+        Me.Controls.Add(Me.RAMLbl)
+        Me.Controls.Add(Me.CPULbl)
+        Me.Controls.Add(Me.TestAllBtn)
+        Me.Controls.Add(Me.DiskBtn)
+        Me.Controls.Add(Me.RAMBtn)
+        Me.Controls.Add(Me.CPUBtn)
+        Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 24.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.MaximizeBox = False
+        Me.Name = "Benchmark"
+        Me.Text = "Benchmark"
+        Me.ResumeLayout(False)
 
     End Sub
 
@@ -172,4 +164,5 @@ Partial Class Benchmark
     Friend WithEvents DiskLbl As Label
     Friend WithEvents InfoBtn As Button
     Friend WithEvents CopyBtn As Button
+    Friend WithEvents HardwareBtn As Button
 End Class

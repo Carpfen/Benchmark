@@ -2,7 +2,7 @@
 
 Public Class Benchmark
     Dim StartTime As DateTime
-    Dim Version As String = $"2.1_"
+    ReadOnly Version As String = "2.2_" & If(Environment.Is64BitProcess, "x64", "x86")
 
     Public Sub CPU()
         Dim n As Byte
@@ -106,6 +106,7 @@ Public Class Benchmark
         TestAllBtn.Enabled = enabled
         InfoBtn.Enabled = enabled
         CopyBtn.Enabled = enabled
+        HardwareBtn.Enabled = enabled
     End Sub
 
     Private Sub CPUBtn_Click(sender As Object, e As EventArgs) Handles CPUBtn.Click
@@ -139,55 +140,20 @@ Public Class Benchmark
     End Sub
 
     Private Sub Benchmark_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Version &= If(Environment.Is64BitProcess, "x64", "x86")
         Text &= $" ({Version})"
         Show()
         TestAllBtn.Focus()
     End Sub
 
-    Private Sub InfoBtn_Click(sender As Object, e As EventArgs) Handles InfoBtn.Click
-        MsgBox($"Ersteller des Benchmarks:{vbCrLf}Carsten Kranz{vbCrLf & vbCrLf}Version:{vbCrLf & Version & vbCrLf & vbCrLf & vbCrLf}Die Werte geben die Zeit des jeweiligen Prozesses in Sekunden an.{vbCrLf}Doppelklicken Sie die Werte, um sie in der Zwischenablage zu speichern.", vbInformation, "Informationen")
-    End Sub
-
-    Private Sub CPULbl_DoubleClick(sender As Object, e As EventArgs) Handles CPULbl.DoubleClick
-        Dim t As String
-        If IsNumeric(CPULbl.Text.ToCharArray()(0)) Then
-            t = CPULbl.Text
+    Private Sub Copy(sender As Object, e As EventArgs) Handles CPULbl.DoubleClick, RAMLbl.DoubleClick, DiskLbl.DoubleClick
+        Dim lbl As Label = CType(sender, Label)
+        If IsNumeric(lbl.Text.ToCharArray()(0)) Then
+            Dim t As String = lbl.Text
             Clipboard.SetText(t)
-            CPULbl.Text = "Kopiert!"
-            CPULbl.Update()
+            lbl.Text = "Kopiert!"
+            lbl.Update()
             Threading.Thread.Sleep(1000)
-            CPULbl.Text = t
-        Else
-            Clipboard.Clear()
-        End If
-    End Sub
-
-    Private Sub RAMLbl_DoubleClick(sender As Object, e As EventArgs) Handles RAMLbl.DoubleClick
-        Dim t As String
-        If IsNumeric(RAMLbl.Text.ToCharArray()(0)) Then
-            t = RAMLbl.Text
-            Clipboard.SetText(t)
-            RAMLbl.Text = "Kopiert!"
-            RAMLbl.Update()
-            Threading.Thread.Sleep(1000)
-            RAMLbl.Text = t
-        Else
-            Clipboard.Clear()
-        End If
-    End Sub
-
-    Private Sub DiskLbl_DoubleClick(sender As Object, e As EventArgs) Handles DiskLbl.DoubleClick
-        Dim t As String
-        If IsNumeric(DiskLbl.Text.ToCharArray()(0)) Then
-            t = DiskLbl.Text
-            Clipboard.SetText(t)
-            DiskLbl.Text = "Kopiert!"
-            DiskLbl.Update()
-            Threading.Thread.Sleep(1000)
-            DiskLbl.Text = t
-        Else
-            Clipboard.Clear()
+            lbl.Text = t
         End If
     End Sub
 
@@ -217,5 +183,15 @@ Public Class Benchmark
         CopyBtn.Update()
         Threading.Thread.Sleep(1000)
         CopyBtn.Text = "Kopiere Werte"
+    End Sub
+
+
+    Private Sub InfoBtn_Click(sender As Object, e As EventArgs) Handles InfoBtn.Click
+        MsgBox($"Ersteller des Benchmarks:{vbCrLf}Carsten Kranz{vbCrLf & vbCrLf}Version:{vbCrLf & Version & vbCrLf & vbCrLf & vbCrLf}Die Werte geben die Zeit des jeweiligen Prozesses in Sekunden an.{vbCrLf}Doppelklicken Sie die Werte, um sie in der Zwischenablage zu speichern.", vbInformation, "Informationen")
+    End Sub
+
+    Private Sub HardwareBtn_Click(sender As Object, e As EventArgs) Handles HardwareBtn.Click
+        Dim hw As New Hardware()
+        hw.ShowDialog()
     End Sub
 End Class
