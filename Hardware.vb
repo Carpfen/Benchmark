@@ -1,10 +1,13 @@
-﻿Imports System.Management
+﻿Imports System.ComponentModel
+Imports System.Management
 
 Public Class Hardware
     Private minWidth As Integer
     Private minHeight As Integer
     Private diskLabels As New List(Of Label)
 
+    Private Shared startPoint As Point = Nothing
+    Public updateValues As Boolean = False
     Public Shared disks As New Dictionary(Of String, String)
     Public Shared currentDisk As String
 
@@ -16,6 +19,7 @@ Public Class Hardware
         minWidth = CPU.Width
         RAM.Text = GetRAM()
         ' Disk:
+        InitDisks()
         Dim dHeight As Integer = 261
         If disks.Count > 1 Then
             DiskLbl.Text = "Disks:"
@@ -37,6 +41,8 @@ Public Class Hardware
             If minWidth < l.Width Then minWidth = l.Width
         Next
         minHeight = dHeight + 40
+
+        If startPoint <> Nothing Then Location = startPoint
     End Sub
 
     Private Sub Hardware_Shown(sender As Object, e As EventArgs) Handles Me.Shown
@@ -83,8 +89,9 @@ Public Class Hardware
     End Function
 
     Public Shared Sub InitDisks()
-        currentDisk = Environment.GetCommandLineArgs(0)
-        For Each diskMOS As ManagementObject In New ManagementObjectSearcher("SELECT Caption, Description, FileSystem, Size, FreeSpace, ProviderName FROM Win32_LogicalDisk WHERE DriveType=3 OR DriveType=4").Get()
+        disks.Clear()
+        If startPoint = Nothing Then currentDisk = Environment.GetCommandLineArgs(0)
+        For Each diskMOS As ManagementObject In New ManagementObjectSearcher("SELECT Caption, Description, FileSystem, Size, FreeSpace, ProviderName FROM Win32_LogicalDisk").Get()
             Try
                 Dim size As Single = diskMOS("Size")
                 Dim freePercent As Single = Math.Round(CSng(diskMOS("FreeSpace")) * 100 / size)
@@ -98,7 +105,7 @@ Public Class Hardware
             Catch
             End Try
         Next
-        currentDisk = currentDisk.Split("\")(0)
+        If startPoint = Nothing Then currentDisk = currentDisk.Split("\")(0)
     End Sub
 
 
@@ -118,5 +125,15 @@ Public Class Hardware
             Threading.Thread.Sleep(1000)
             cLbl.Text = t
         End If
+    End Sub
+
+
+    Private Sub Hardware_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+        updateValues = True
+        Close()
+    End Sub
+
+    Private Sub Hardware_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        startPoint = Location
     End Sub
 End Class

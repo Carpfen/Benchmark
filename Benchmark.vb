@@ -3,7 +3,7 @@
 Public Class Benchmark
     Dim StartTime As DateTime
     Dim cDisk As String = ""
-    ReadOnly Version As String = "2.3_" & If(Environment.Is64BitProcess, "x64", "x86")
+    ReadOnly Version As String = "2.4_" & If(Environment.Is64BitProcess, "x64", "x86")
 
     Public Sub CPU()
         Dim n As Byte
@@ -107,7 +107,20 @@ Public Class Benchmark
             DiskLbl.BackColor = SystemColors.Control
             MsgBox($"Das Programm ist nicht berechtigt, eine Datei in {cDisk} zu schreiben.", vbCritical, "Fehlende Berechtigung")
         Catch ex As Exception
-            Disk(fileNumber + 1)
+            Hardware.InitDisks()
+            If Hardware.currentDisk <> "" AndAlso Not Hardware.disks.ContainsKey(Hardware.currentDisk) Then
+                DiskLbl.Text = "Ausgeworfen?"
+                DiskLbl.BackColor = SystemColors.Control
+                MsgBox($"Das Programm konnte keine Datei in {cDisk} schreiben.{vbCrLf}Wurde der Datenträger ausgeworfen?", vbCritical, "Fehlender Datenträger")
+            Else
+                If fileNumber < 20 Then
+                    Disk(fileNumber + 1)
+                Else
+                    DiskLbl.Text = "Fehler"
+                    DiskLbl.BackColor = SystemColors.Control
+                    MsgBox($"Das Programm konnte keine Datei in {cDisk} schreiben.", vbCritical, "Unbekannter Fehler")
+                End If
+            End If
         End Try
     End Sub
 
@@ -209,8 +222,11 @@ Public Class Benchmark
     End Sub
 
     Private Sub HardwareBtn_Click(sender As Object, e As EventArgs) Handles HardwareBtn.Click
-        Dim hw As New Hardware()
-        hw.ShowDialog()
-        DiskBtn.Text = "Teste Disk:" & If(Hardware.currentDisk <> "", $" ({Hardware.currentDisk})", "")
+        Dim hw As Hardware
+        Do
+            hw = New Hardware()
+            hw.ShowDialog()
+            DiskBtn.Text = "Teste Disk:" & If(Hardware.currentDisk <> "", $" ({Hardware.currentDisk})", "")
+        Loop While hw.updateValues = True
     End Sub
 End Class
