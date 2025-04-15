@@ -38,10 +38,10 @@ Partial Class Benchmark
         '
         Me.CPUBtn.BackColor = System.Drawing.SystemColors.Control
         Me.CPUBtn.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.CPUBtn.Location = New System.Drawing.Point(50, 25)
+        Me.CPUBtn.Location = New System.Drawing.Point(40, 25)
         Me.CPUBtn.Name = "CPUBtn"
         Me.CPUBtn.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.CPUBtn.Size = New System.Drawing.Size(250, 75)
+        Me.CPUBtn.Size = New System.Drawing.Size(260, 75)
         Me.CPUBtn.TabIndex = 0
         Me.CPUBtn.Text = "Teste CPU:"
         Me.CPUBtn.UseVisualStyleBackColor = False
@@ -49,9 +49,9 @@ Partial Class Benchmark
         'RAMBtn
         '
         Me.RAMBtn.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.RAMBtn.Location = New System.Drawing.Point(50, 125)
+        Me.RAMBtn.Location = New System.Drawing.Point(40, 125)
         Me.RAMBtn.Name = "RAMBtn"
-        Me.RAMBtn.Size = New System.Drawing.Size(250, 75)
+        Me.RAMBtn.Size = New System.Drawing.Size(260, 75)
         Me.RAMBtn.TabIndex = 1
         Me.RAMBtn.Text = "Teste RAM:"
         Me.RAMBtn.UseVisualStyleBackColor = False
@@ -59,9 +59,9 @@ Partial Class Benchmark
         'DiskBtn
         '
         Me.DiskBtn.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.DiskBtn.Location = New System.Drawing.Point(50, 225)
+        Me.DiskBtn.Location = New System.Drawing.Point(40, 225)
         Me.DiskBtn.Name = "DiskBtn"
-        Me.DiskBtn.Size = New System.Drawing.Size(250, 75)
+        Me.DiskBtn.Size = New System.Drawing.Size(260, 75)
         Me.DiskBtn.TabIndex = 2
         Me.DiskBtn.Text = "Teste Disk:"
         Me.DiskBtn.UseVisualStyleBackColor = False
@@ -69,9 +69,9 @@ Partial Class Benchmark
         'TestAllBtn
         '
         Me.TestAllBtn.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.TestAllBtn.Location = New System.Drawing.Point(50, 325)
+        Me.TestAllBtn.Location = New System.Drawing.Point(40, 325)
         Me.TestAllBtn.Name = "TestAllBtn"
-        Me.TestAllBtn.Size = New System.Drawing.Size(250, 75)
+        Me.TestAllBtn.Size = New System.Drawing.Size(260, 75)
         Me.TestAllBtn.TabIndex = 3
         Me.TestAllBtn.Text = "Teste Alles"
         Me.TestAllBtn.UseVisualStyleBackColor = False
@@ -80,7 +80,7 @@ Partial Class Benchmark
         '
         Me.CPULbl.Location = New System.Drawing.Point(425, 25)
         Me.CPULbl.Name = "CPULbl"
-        Me.CPULbl.Size = New System.Drawing.Size(250, 75)
+        Me.CPULbl.Size = New System.Drawing.Size(260, 75)
         Me.CPULbl.TabIndex = 4
         Me.CPULbl.Text = "CPU-Werte"
         Me.CPULbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -89,7 +89,7 @@ Partial Class Benchmark
         '
         Me.RAMLbl.Location = New System.Drawing.Point(425, 125)
         Me.RAMLbl.Name = "RAMLbl"
-        Me.RAMLbl.Size = New System.Drawing.Size(250, 75)
+        Me.RAMLbl.Size = New System.Drawing.Size(260, 75)
         Me.RAMLbl.TabIndex = 5
         Me.RAMLbl.Text = "RAM-Werte"
         Me.RAMLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -98,7 +98,7 @@ Partial Class Benchmark
         '
         Me.DiskLbl.Location = New System.Drawing.Point(425, 225)
         Me.DiskLbl.Name = "DiskLbl"
-        Me.DiskLbl.Size = New System.Drawing.Size(250, 75)
+        Me.DiskLbl.Size = New System.Drawing.Size(260, 75)
         Me.DiskLbl.TabIndex = 6
         Me.DiskLbl.Text = "Disk-Werte"
         Me.DiskLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -106,9 +106,9 @@ Partial Class Benchmark
         'InfoBtn
         '
         Me.InfoBtn.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.InfoBtn.Location = New System.Drawing.Point(50, 465)
+        Me.InfoBtn.Location = New System.Drawing.Point(40, 465)
         Me.InfoBtn.Name = "InfoBtn"
-        Me.InfoBtn.Size = New System.Drawing.Size(250, 75)
+        Me.InfoBtn.Size = New System.Drawing.Size(260, 75)
         Me.InfoBtn.TabIndex = 8
         Me.InfoBtn.Text = "Informationen"
         Me.InfoBtn.UseVisualStyleBackColor = False
@@ -118,7 +118,7 @@ Partial Class Benchmark
         Me.CopyBtn.Cursor = System.Windows.Forms.Cursors.Hand
         Me.CopyBtn.Location = New System.Drawing.Point(425, 325)
         Me.CopyBtn.Name = "CopyBtn"
-        Me.CopyBtn.Size = New System.Drawing.Size(250, 75)
+        Me.CopyBtn.Size = New System.Drawing.Size(260, 75)
         Me.CopyBtn.TabIndex = 7
         Me.CopyBtn.Text = "Kopiere Werte"
         Me.CopyBtn.UseVisualStyleBackColor = False
@@ -128,7 +128,7 @@ Partial Class Benchmark
         Me.HardwareBtn.Cursor = System.Windows.Forms.Cursors.Hand
         Me.HardwareBtn.Location = New System.Drawing.Point(425, 465)
         Me.HardwareBtn.Name = "HardwareBtn"
-        Me.HardwareBtn.Size = New System.Drawing.Size(250, 75)
+        Me.HardwareBtn.Size = New System.Drawing.Size(260, 75)
         Me.HardwareBtn.TabIndex = 9
         Me.HardwareBtn.Text = "Hardware"
         Me.HardwareBtn.UseVisualStyleBackColor = False

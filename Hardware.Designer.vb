@@ -31,7 +31,6 @@ Partial Class Hardware
         Me.RAMLbl = New System.Windows.Forms.Label()
         Me.RAM = New System.Windows.Forms.Label()
         Me.DiskLbl = New System.Windows.Forms.Label()
-        Me.Disk = New System.Windows.Forms.Label()
         Me.CopyBtn = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
@@ -125,16 +124,6 @@ Partial Class Hardware
         Me.DiskLbl.TabIndex = 8
         Me.DiskLbl.Text = "Disk:"
         '
-        'Disk
-        '
-        Me.Disk.AutoSize = True
-        Me.Disk.Location = New System.Drawing.Point(205, 261)
-        Me.Disk.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Disk.Name = "Disk"
-        Me.Disk.Size = New System.Drawing.Size(68, 31)
-        Me.Disk.TabIndex = 9
-        Me.Disk.Text = "Disk"
-        '
         'CopyBtn
         '
         Me.CopyBtn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -142,7 +131,7 @@ Partial Class Hardware
         Me.CopyBtn.Location = New System.Drawing.Point(246, 12)
         Me.CopyBtn.Name = "CopyBtn"
         Me.CopyBtn.Size = New System.Drawing.Size(199, 44)
-        Me.CopyBtn.TabIndex = 10
+        Me.CopyBtn.TabIndex = 9
         Me.CopyBtn.Text = "Kopiere Werte"
         Me.CopyBtn.UseVisualStyleBackColor = False
         '
@@ -152,7 +141,6 @@ Partial Class Hardware
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(457, 317)
         Me.Controls.Add(Me.CopyBtn)
-        Me.Controls.Add(Me.Disk)
         Me.Controls.Add(Me.DiskLbl)
         Me.Controls.Add(Me.RAM)
         Me.Controls.Add(Me.RAMLbl)
@@ -182,6 +170,5 @@ Partial Class Hardware
     Friend WithEvents RAMLbl As Label
     Friend WithEvents RAM As Label
     Friend WithEvents DiskLbl As Label
-    Friend WithEvents Disk As Label
     Friend WithEvents CopyBtn As Button
 End Class

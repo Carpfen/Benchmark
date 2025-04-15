@@ -2,7 +2,8 @@
 
 Public Class Benchmark
     Dim StartTime As DateTime
-    ReadOnly Version As String = "2.2_" & If(Environment.Is64BitProcess, "x64", "x86")
+    Dim cDisk As String = ""
+    ReadOnly Version As String = "2.3_" & If(Environment.Is64BitProcess, "x64", "x86")
 
     Public Sub CPU()
         Dim n As Byte
@@ -50,7 +51,8 @@ Public Class Benchmark
 
     Public Sub Disk(Optional fileNumber As Integer = 0)
         Dim time As Double
-        Dim fileName As String = $"tempfile {fileNumber}.ckbm"
+        cDisk = Hardware.currentDisk
+        Dim fileName As String = $"{cDisk}\tempfile {fileNumber}.ckbm"
         DiskLbl.Text = "Berechne . . ."
         DiskLbl.BackColor = CPUBtn.BackColor
         DiskLbl.Update()
@@ -94,7 +96,10 @@ Public Class Benchmark
                 Threading.Thread.Sleep(1000)
                 failedAttempts -= 1
             End While
-        Catch
+        Catch ex As UnauthorizedAccessException
+            DiskLbl.Text = "Nicht Berechtigt"
+            MsgBox($"Das Programm ist nicht berechtigt, eine Datei in {If(cDisk <> "", cDisk, "das CWD")} zu schreiben.", vbCritical, "Fehlende Berechtigung")
+        Catch ex As Exception
             Disk(fileNumber + 1)
         End Try
     End Sub
@@ -140,6 +145,10 @@ Public Class Benchmark
     End Sub
 
     Private Sub Benchmark_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Hardware.InitDisks()
+        If Hardware.currentDisk <> "" Then
+            DiskBtn.Text &= $" ({Hardware.currentDisk})"
+        End If
         Text &= $" ({Version})"
         Show()
         TestAllBtn.Focus()
@@ -178,7 +187,9 @@ Public Class Benchmark
             disk = "-"
         End If
 
-        Clipboard.SetText($"Benchmark ({Version}) Ergebnisse:{vbCrLf}CPU: {cpu & vbCrLf}RAM: {ram & vbCrLf}Disk: {disk}")
+        Dim diskH As String = If(cDisk <> "" AndAlso Hardware.disks.ContainsKey(cDisk), $" ({Hardware.disks(cDisk)})", "")
+
+        Clipboard.SetText($"Benchmark ({Version}) Ergebnisse:{vbCrLf}CPU: {cpu} ({Hardware.GetCPU()}){vbCrLf}RAM: {ram} ({Hardware.GetRAM()}){vbCrLf}Disk: {disk & diskH}")
         CopyBtn.Text = "Kopiert!"
         CopyBtn.Update()
         Threading.Thread.Sleep(1000)
@@ -193,5 +204,6 @@ Public Class Benchmark
     Private Sub HardwareBtn_Click(sender As Object, e As EventArgs) Handles HardwareBtn.Click
         Dim hw As New Hardware()
         hw.ShowDialog()
+        DiskBtn.Text = "Teste Disk:" & If(Hardware.currentDisk <> "", $" ({Hardware.currentDisk})", "")
     End Sub
 End Class
