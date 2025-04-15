@@ -104,6 +104,7 @@ Public Class Benchmark
             End While
         Catch ex As UnauthorizedAccessException
             DiskLbl.Text = "Nicht Berechtigt"
+            DiskLbl.BackColor = SystemColors.Control
             MsgBox($"Das Programm ist nicht berechtigt, eine Datei in {cDisk} zu schreiben.", vbCritical, "Fehlende Berechtigung")
         Catch ex As Exception
             Disk(fileNumber + 1)
