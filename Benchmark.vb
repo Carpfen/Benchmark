@@ -50,13 +50,19 @@ Public Class Benchmark
     End Sub
 
     Public Sub Disk(Optional fileNumber As Integer = 0)
-        Dim time As Double
-        cDisk = Hardware.currentDisk
-        Dim fileName As String = $"{cDisk}\tempfile {fileNumber}.ckbm"
-        DiskLbl.Text = "Berechne . . ."
-        DiskLbl.BackColor = CPUBtn.BackColor
-        DiskLbl.Update()
         Try
+            Dim time As Double
+            cDisk = Hardware.currentDisk
+            Dim cDir As String = $"{cDisk}\tempdir {fileNumber}"
+            If Not Directory.Exists(cDir) Then
+                Directory.CreateDirectory(cDir)
+            Else
+                Throw New Exception
+            End If
+            Dim fileName As String = $"{cDir}\tempfile {fileNumber}.ckbm"
+            DiskLbl.Text = "Berechne . . ."
+            DiskLbl.BackColor = CPUBtn.BackColor
+            DiskLbl.Update()
             StartTime = Now
 
             Dim writer As StreamWriter
@@ -75,7 +81,7 @@ Public Class Benchmark
             reader.Close()
             reader.Dispose()
             time = Now.Subtract(StartTime).TotalSeconds
-            File.Delete(fileName)
+            Directory.Delete(cDir, True)
             DiskLbl.Text = time.ToString.Substring(0, 4)
             If time < 3 Then
                 DiskLbl.BackColor = Color.Green
@@ -87,18 +93,18 @@ Public Class Benchmark
             DiskLbl.Update()
 
             Dim failedAttempts As Byte = 10
-            While File.Exists(fileName)
+            While Directory.Exists(cDir)
                 If failedAttempts = 0 Then
-                    MsgBox(fileName & " konnte nicht wieder gelöscht werden.", vbExclamation, "Fehler beim Löschen")
+                    MsgBox(cDir & " konnte nicht wieder gelöscht werden.", vbExclamation, "Fehler beim Löschen")
                     Exit While
                 End If
-                File.Delete(fileName)
+                Directory.Delete(cDir, True)
                 Threading.Thread.Sleep(1000)
                 failedAttempts -= 1
             End While
         Catch ex As UnauthorizedAccessException
             DiskLbl.Text = "Nicht Berechtigt"
-            MsgBox($"Das Programm ist nicht berechtigt, eine Datei in {If(cDisk <> "", cDisk, "das CWD")} zu schreiben.", vbCritical, "Fehlende Berechtigung")
+            MsgBox($"Das Programm ist nicht berechtigt, eine Datei in {cDisk} zu schreiben.", vbCritical, "Fehlende Berechtigung")
         Catch ex As Exception
             Disk(fileNumber + 1)
         End Try
