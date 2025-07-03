@@ -3,7 +3,7 @@
 Public Class Benchmark
     Dim StartTime As DateTime
     Dim cDisk As String = ""
-    ReadOnly Version As String = "2.4_" & If(Environment.Is64BitProcess, "x64", "x86")
+    ReadOnly Version As String = "2.5_" & If(Environment.Is64BitProcess, "x64", "x86")
 
     Public Sub CPU()
         Dim n As Byte

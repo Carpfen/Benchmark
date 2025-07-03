@@ -12,37 +12,42 @@ Public Class Hardware
     Public Shared currentDisk As String
 
     Private Sub Hardware_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        PCName.Text = Environment.MachineName
-        OS.Text = New ManagementObjectSearcher("SELECT Caption FROM Win32_OperatingSystem").Get()(0)("Caption").ToString().Replace("Microsoft ", "") & $" ({If(Environment.Is64BitOperatingSystem, "x64", "x86")})"
+        Try
+            PCName.Text = Environment.MachineName
+            OS.Text = New ManagementObjectSearcher("SELECT Caption FROM Win32_OperatingSystem").Get()(0)("Caption").ToString().Replace("Microsoft ", "") & $" ({If(Environment.Is64BitOperatingSystem, "x64", "x86")})"
 
-        CPU.Text = GetCPU()
-        minWidth = CPU.Width
-        RAM.Text = GetRAM()
-        ' Disk:
-        InitDisks()
-        Dim dHeight As Integer = 261
-        If disks.Count > 1 Then
-            DiskLbl.Text = "Disks:"
-        End If
-        For Each kvp As KeyValuePair(Of String, String) In disks
-            Dim l As New Label With {
-                .AutoSize = True,
-                .Cursor = Cursors.Hand,
-                .Location = New Point(205, dHeight),
-                .Tag = kvp.Key,
-                .Text = kvp.Value
-            }
-            dHeight += 50
-            If kvp.Key <> currentDisk Then l.ForeColor = Color.Gray
-            AddHandler l.MouseClick, AddressOf SelectDisk
-            AddHandler l.DoubleClick, AddressOf Close
-            diskLabels.Add(l)
-            Controls.Add(l)
-            If minWidth < l.Width Then minWidth = l.Width
-        Next
-        minHeight = dHeight + 40
+            CPU.Text = GetCPU()
+            minWidth = CPU.Width
+            RAM.Text = GetRAM()
+            ' Disk:
+            InitDisks()
+            Dim dHeight As Integer = 261
+            If disks.Count > 1 Then
+                DiskLbl.Text = "Disks:"
+            End If
+            For Each kvp As KeyValuePair(Of String, String) In disks
+                Dim l As New Label With {
+                    .AutoSize = True,
+                    .Cursor = Cursors.Hand,
+                    .Location = New Point(205, dHeight),
+                    .Tag = kvp.Key,
+                    .Text = kvp.Value
+                }
+                dHeight += 50
+                If kvp.Key <> currentDisk Then l.ForeColor = Color.Gray
+                AddHandler l.MouseClick, AddressOf SelectDisk
+                AddHandler l.DoubleClick, AddressOf Close
+                diskLabels.Add(l)
+                Controls.Add(l)
+                If minWidth < l.Width Then minWidth = l.Width
+            Next
+            minHeight = dHeight + 40
 
-        If startPoint <> Nothing Then Location = startPoint
+            If startPoint <> Nothing Then Location = startPoint
+        Catch ex As Exception
+            MsgBox(ex.Message, vbExclamation, "Fehler beim Laden der Hardwareinformation")
+            Close()
+        End Try
     End Sub
 
     Private Sub Hardware_Shown(sender As Object, e As EventArgs) Handles Me.Shown
@@ -91,20 +96,24 @@ Public Class Hardware
     Public Shared Sub InitDisks()
         disks.Clear()
         If startPoint = Nothing Then currentDisk = Environment.GetCommandLineArgs(0)
-        For Each diskMOS As ManagementObject In New ManagementObjectSearcher("SELECT Caption, Description, FileSystem, Size, FreeSpace, ProviderName FROM Win32_LogicalDisk").Get()
-            Try
-                Dim size As Single = diskMOS("Size")
-                Dim freePercent As Single = Math.Round(CSng(diskMOS("FreeSpace")) * 100 / size)
-                disks(diskMOS("Caption")) = $"{diskMOS("Caption")} {diskMOS("Description")} ({diskMOS("FileSystem")})  -  {Math.Round(size / (1024 * 1024 * 1024), 2)} GiB  ({freePercent}% frei)"
+        Try
+            For Each diskMOS As ManagementObject In New ManagementObjectSearcher("SELECT Caption, Description, FileSystem, Size, FreeSpace, ProviderName FROM Win32_LogicalDisk").Get()
+                Try
+                    Dim size As Single = diskMOS("Size")
+                    Dim freePercent As Single = Math.Round(CSng(diskMOS("FreeSpace")) * 100 / size)
+                    disks(diskMOS("Caption")) = $"{diskMOS("Caption")} {diskMOS("Description")} ({diskMOS("FileSystem")})  -  {Math.Round(size / (1024 * 1024 * 1024), 2)} GiB  ({freePercent}% frei)"
 
-                If diskMOS("ProviderName") <> "" Then
-                    If currentDisk.StartsWith(diskMOS("ProviderName")) Then
-                        currentDisk = currentDisk.Replace(diskMOS("ProviderName"), diskMOS("Caption"))
+                    If diskMOS("ProviderName") <> "" Then
+                        If currentDisk.StartsWith(diskMOS("ProviderName")) Then
+                            currentDisk = currentDisk.Replace(diskMOS("ProviderName"), diskMOS("Caption"))
+                        End If
                     End If
-                End If
-            Catch
-            End Try
-        Next
+                Catch
+                End Try
+            Next
+        Catch
+            MsgBox("Die Disks können nicht geladen werden.", vbExclamation, "Fehler beim Laden der Disks")
+        End Try
         If startPoint = Nothing Then currentDisk = currentDisk.Split("\")(0)
     End Sub
 
